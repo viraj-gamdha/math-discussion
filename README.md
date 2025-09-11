@@ -1,4 +1,8 @@
-# Math Discussion App
+# Math Discussion Test App
+
+# Tech stack
+- Backend: Node.js | Express.js | Typescript | MongoDB
+- Frontend: React + Vite | Typescript | Sass/Scss
 
 # To run
 1. Rename .env.example files to .env
