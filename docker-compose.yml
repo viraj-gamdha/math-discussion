@@ -1,0 +1,35 @@
+services:
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password11
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+
+  express-server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    env_file: ./backend/.env
+    ports:
+      - 4000:4000
+
+  react-client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_SERVER_URL: http://localhost:4000
+    restart: unless-stopped
+    depends_on:
+      - express-server
+    ports:
+      - "5173:5173"
+
+volumes:
+  mongo_data:
+    driver: local

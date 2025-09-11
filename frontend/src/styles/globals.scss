@@ -1,0 +1,79 @@
+// Global styles
+@use "./theme" as *;
+@use "./pages" as *;
+
+// Defaulting
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Global html element styles
+body {
+  overflow-x: hidden;
+  scroll-behavior: none;
+  background-color: var(--color-bg);
+}
+
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+ul {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--font-1);
+  color: var(--color-text);
+}
+
+th,
+tr {
+  font-weight: unset;
+}
+
+h1 {
+  font-size: 1.75rem;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+p {
+  font-family: var(--font-1);
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: 1rem;
+  text-align: justify;
+}
