@@ -21,7 +21,25 @@ const discussionApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Discussion"],
+      // invalidatesTags: ["Discussion"],
+      async onQueryStarted(_data, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data.success) {
+            dispatch(
+              discussionApiSlice.util.updateQueryData(
+                "getDiscussions",
+                undefined,
+                (draft) => {
+                  draft.data.push(data.data);
+                }
+              )
+            );
+          }
+        } catch (error) {
+          console.log("Create Discussion Error", error);
+        }
+      },
     }),
     addOperation: builder.mutation<ApiResult<Discussion>, OperationFormData>({
       query: (data: OperationFormData) => ({
@@ -29,7 +47,25 @@ const discussionApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Discussion"],
+      // invalidatesTags: ["Discussion"],
+      async onQueryStarted(_data, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data.success) {
+            dispatch(
+              discussionApiSlice.util.updateQueryData(
+                "getDiscussions",
+                undefined,
+                (draft) => {
+                  draft.data.push(data.data);
+                }
+              )
+            );
+          }
+        } catch (error) {
+          console.log("Create Discussion Error", error);
+        }
+      },
     }),
 
     deleteDiscussion: builder.mutation<ApiResult<null>, string>({
@@ -37,7 +73,28 @@ const discussionApiSlice = apiSlice.injectEndpoints({
         url: `discussions/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Discussion"],
+      // invalidatesTags: ["Discussion"],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          const { data: result } = await queryFulfilled;
+          if (result.success) {
+            // Remove discussion from getDiscussions query cache
+            dispatch(
+              discussionApiSlice.util.updateQueryData(
+                "getDiscussions",
+                undefined,
+                (draft) => {
+                  draft.data = draft.data.filter(
+                    (discussion) => discussion._id !== id
+                  );
+                }
+              )
+            );
+          }
+        } catch (error) {
+          console.log("Delete Project Error", error);
+        }
+      },
     }),
   }),
 });
@@ -46,5 +103,5 @@ export const {
   useGetDiscussionsQuery,
   useAddStartingNumberMutation,
   useAddOperationMutation,
-  useDeleteDiscussionMutation
+  useDeleteDiscussionMutation,
 } = discussionApiSlice;
