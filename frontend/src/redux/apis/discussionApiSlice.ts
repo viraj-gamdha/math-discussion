@@ -63,7 +63,7 @@ const discussionApiSlice = apiSlice.injectEndpoints({
             );
           }
         } catch (error) {
-          console.log("Create Discussion Error", error);
+          console.log("Add Operation Error", error);
         }
       },
     }),
@@ -92,7 +92,7 @@ const discussionApiSlice = apiSlice.injectEndpoints({
             );
           }
         } catch (error) {
-          console.log("Delete Project Error", error);
+          console.log("Delete Error", error);
         }
       },
     }),
